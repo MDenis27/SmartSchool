@@ -14,7 +14,7 @@ class DatabasesService {
   Future updateUserData(
       String name, String firstname, String phone, String email) async {
     return await userCollection.document(uid).setData(
-        {'name': name, 'firstname': firstname, 'phone': phone, 'email': email});
+        {'name': name, 'firstname': firstname, 'phone': phone, 'email': email, 'classes': '0'});
   }
 
   // message list from snapshot
