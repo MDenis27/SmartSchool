@@ -55,6 +55,14 @@ class _SettingsFormState extends State<SettingsForm> {
                 setState(() => _currentFirstname = val);
               }),
           SizedBox(height: 20.0),
+          TextFormField(
+              decoration: textInputDecoration.copyWith(hintText: 'Phone'),
+              validator: (val) =>
+              val.isEmpty ? 'Please enter a phone number' : null,
+              onChanged: (val) {
+                setState(() => _currentPhone = val);
+              }),
+          SizedBox(height: 20.0),
           // dropdown
           DropdownButtonFormField(
             decoration: textInputDecoration.copyWith(hintText: 'Class'),
