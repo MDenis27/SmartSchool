@@ -54,8 +54,8 @@ class DatabasesService {
   }
 
   // get user doc streams
-  Stream<UserData> get userdata {
-    return messageCollection.document(uid).snapshots()
+  Stream<UserData> get userData {
+    return userCollection.document(uid).snapshots()
         .map((_userDataFromSnapshot));
   }
 }
