@@ -12,7 +12,7 @@ class _MessageListState extends State<MessageList> {
   @override
   Widget build(BuildContext context) {
 
-    final messages = Provider.of<List<Message>>(context);
+    final messages = Provider.of<List<Message>>(context) ?? [];
 
     return ListView.builder(
       itemCount: messages.length,

@@ -28,7 +28,7 @@ class _SettingsFormState extends State<SettingsForm> {
   ];
 
   // form values
-  String _currentClasses;
+  String _currentClasse;
   String _currentName;
   String _currentFirstname;
   String _currentPhone;
@@ -41,7 +41,6 @@ class _SettingsFormState extends State<SettingsForm> {
         stream: DatabasesService(uid: user.uid).userData,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-
             UserData userData = snapshot.data;
 
             return Form(
@@ -86,14 +85,14 @@ class _SettingsFormState extends State<SettingsForm> {
                   // dropdown
                   DropdownButtonFormField(
                     decoration: textInputDecoration.copyWith(hintText: 'Class'),
-                    value: _currentClasses ?? userData.classe,
+                    value: _currentClasse ?? userData.classe,
                     items: classes.map((classe) {
                       return DropdownMenuItem(
                         value: classe,
                         child: Text('$classe class'),
                       );
                     }).toList(),
-                    onChanged: (val) => setState(() => _currentClasses = val),
+                    onChanged: (val) => setState(() => _currentClasse = val),
                   ),
                   RaisedButton(
                     color: Colors.pink[400],
@@ -102,10 +101,15 @@ class _SettingsFormState extends State<SettingsForm> {
                       style: TextStyle(color: Colors.white),
                     ),
                     onPressed: () async {
-                      print(_currentName);
-                      print(_currentFirstname);
-                      print(_currentClasses);
-                      print(_currentPhone);
+                      if (_formKey.currentState.validate()) {
+                        await DatabasesService(uid: user.uid).updateUserData(
+                            _currentName ?? userData.name,
+                            _currentFirstname ?? userData.firstname,
+                            _currentPhone ?? userData.phone,
+                            userData.mail,
+                            _currentClasse ?? userData.classe);
+                        Navigator.pop(context);
+                      }
                     },
                   )
                 ],

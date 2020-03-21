@@ -45,7 +45,15 @@ class Home extends StatelessWidget {
                 label: Text('settings'))
           ],
         ),
-        body: MessageList(),
+        body: Container(
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage('assets/crayon.png'),
+              fit: BoxFit.cover,
+            )
+          ),
+            child: MessageList()
+        ),
       ),
     );
   }
