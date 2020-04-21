@@ -10,7 +10,7 @@ class UserData {
   final String name;
   final String firstname;
   final String phone;
-  final String classe;
+  final Map classes;
 
   UserData(
       {this.uid,
@@ -18,5 +18,5 @@ class UserData {
       this.firstname,
       this.mail,
       this.name,
-      this.classe});
+      this.classes});
 }

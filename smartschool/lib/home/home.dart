@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:smartschool/home/setting-form.dart';
 import 'package:smartschool/models/message.dart';
+import 'package:smartschool/models/user.dart';
 import 'package:smartschool/services/auth.dart';
 import 'package:smartschool/services/database.dart';
 import 'package:provider/provider.dart';
@@ -12,6 +13,8 @@ class Home extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final user = Provider.of<User>(context);
+
     void _showSettingsPanel() {
       showModalBottomSheet(
         isScrollControlled: true,
@@ -24,6 +27,15 @@ class Home extends StatelessWidget {
           });
     }
 
+    bool _isAdmin() {
+      if (user.uid == "XFAHOg4HzLSKqXHunsB4S3AyF1n1") {
+        return true;
+      } else {
+        return false;
+      }
+    }
+
+
     return StreamProvider<List<Message>>.value(
       value: DatabasesService().messages,
       child: Scaffold(
@@ -33,16 +45,30 @@ class Home extends StatelessWidget {
           backgroundColor: Colors.brown[400],
           elevation: 0.0,
           actions: <Widget>[
-            FlatButton.icon(
-                onPressed: () async {
-                  await _auth.signOut();
-                },
-                icon: Icon(Icons.person),
-                label: Text("logout")),
-            FlatButton.icon(
-                onPressed: () => _showSettingsPanel(),
-                icon: Icon(Icons.settings),
-                label: Text('settings'))
+            IconButton(
+              icon: Icon(Icons.exit_to_app),
+              color: Colors.black,
+              onPressed: () async {
+                await _auth.signOut();
+              },
+            ),
+            IconButton(
+              icon: Icon(Icons.add),
+              color: Colors.green,
+              onPressed: () {
+                if (_isAdmin()){
+                  // TODO implement add note
+                  print('Do Something');
+                } else {
+                  print('Not Admin');
+                }
+              },
+            ),
+            IconButton(
+              icon: Icon(Icons.settings),
+              color: Colors.grey,
+              onPressed: () => _showSettingsPanel(),
+            ),
           ],
         ),
         body: Container(

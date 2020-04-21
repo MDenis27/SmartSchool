@@ -27,13 +27,14 @@ class DatabasesService {
 
   // message list from snapshot
   List<Message> _messageListFromSnapshot(QuerySnapshot snapshot) {
-    return snapshot.documents.map((doc) {
+    List<Message> messages = snapshot.documents.map((doc) {
       return Message(
         title: doc.data['title'] ?? '',
         classes: doc.data['classes'] ?? [],
         text: doc.data['text'] ?? '',
       );
     }).toList();
+    return messages;
   }
 
   // userData from snapshot
@@ -44,7 +45,7 @@ class DatabasesService {
       firstname: snapshot.data['firstname'],
       mail: snapshot.data['mail'],
       phone: snapshot.data['phone'],
-      classe: snapshot.data['classe'],
+      classes: snapshot.data['classes'],
     );
   }
 
@@ -58,4 +59,5 @@ class DatabasesService {
     return userCollection.document(uid).snapshots()
         .map((_userDataFromSnapshot));
   }
+
 }

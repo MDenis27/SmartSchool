@@ -28,7 +28,7 @@ class _SettingsFormState extends State<SettingsForm> {
   ];
 
   // form values
-  String _currentClasse;
+  String _currentClasses;
   String _currentName;
   String _currentFirstname;
   String _currentPhone;
@@ -85,14 +85,14 @@ class _SettingsFormState extends State<SettingsForm> {
                   // dropdown
                   DropdownButtonFormField(
                     decoration: textInputDecoration.copyWith(hintText: 'Class'),
-                    value: _currentClasse ?? userData.classe,
+                    value: _currentClasses ?? userData.classes,
                     items: classes.map((classe) {
                       return DropdownMenuItem(
                         value: classe,
                         child: Text('$classe class'),
                       );
                     }).toList(),
-                    onChanged: (val) => setState(() => _currentClasse = val),
+                    onChanged: (val) => setState(() => _currentClasses = val),
                   ),
                   RaisedButton(
                     color: Colors.pink[400],
@@ -107,7 +107,7 @@ class _SettingsFormState extends State<SettingsForm> {
                             _currentFirstname ?? userData.firstname,
                             _currentPhone ?? userData.phone,
                             userData.mail,
-                            _currentClasse ?? userData.classe);
+                            _currentClasses ?? userData.classes);
                         Navigator.pop(context);
                       }
                     },
