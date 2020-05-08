@@ -16,9 +16,8 @@ class Wrapper extends StatelessWidget {
     if (user == null) {
       return Authenticate();
     } else {
-      if(user.uid == "rroYbIadk2bXs9wr3K92os4GDkj1"){
+      if(user.uid == "MerAG3gBNkdETxBqVsqezA54ENL2"){
         adminMode = true;
-        //return HomePage();
       }else{adminMode = false;}
       return HomePage(adminMode:adminMode , uid : user.uid);
     }

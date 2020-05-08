@@ -2,11 +2,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Classes {
   final String id;
-  final List noticesId;
+  final List messagesId;
 
   Classes(DocumentSnapshot snapshot)
       : id = snapshot.documentID,
-        noticesId = snapshot.data['noticesId'];
+        messagesId = snapshot.data['messagesId'];
 
-  String toString() => "Class($id)<noticesId: $noticesId>";
+  String toString() => "Class($id)<messageID: $messagesId>";
 }

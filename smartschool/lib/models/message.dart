@@ -8,11 +8,11 @@ class Message {
 
   Message(DocumentSnapshot snapshot)
       : id = snapshot.documentID,
-        title = snapshot.data['object'],
+        title = snapshot.data['title'],
         text = snapshot.data['text'],
         date = snapshot.data['date'].toDate();
 
   String get formatedDate => "${date.day}/${date.month}/${date.year}";
 
-  String toString() => "Notice($id)<objet: $title, date: $formatedDate, text : $text>";
+  String toString() => "Message($id)<title: $title, date: $formatedDate, text : $text>";
 }

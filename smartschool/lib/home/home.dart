@@ -115,7 +115,7 @@ class HomePageState extends State<HomePage> {
       heroTag: "addNoticeBtn",
       onPressed: () {
         Navigator.push(context,
-            MaterialPageRoute(builder: (context) => AddNoticePage()));
+            MaterialPageRoute(builder: (context) => AddMessagePage()));
       },
       child: Icon(Icons.add),
     );

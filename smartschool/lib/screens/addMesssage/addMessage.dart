@@ -4,11 +4,11 @@ import 'package:grouped_buttons/grouped_buttons.dart';
 import 'package:smartschool/services/auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 
-class AddNoticePage extends StatefulWidget {
-  _AddNoticePageState createState() => _AddNoticePageState();
+class AddMessagePage extends StatefulWidget {
+  _AddMessagePageState createState() => _AddMessagePageState();
 }
 
-class _AddNoticePageState extends State<AddNoticePage> {
+class _AddMessagePageState extends State<AddMessagePage> {
   final _formKey = GlobalKey<FormState>();
   final _objectController = TextEditingController();
   final _textController = TextEditingController();
@@ -43,7 +43,7 @@ class _AddNoticePageState extends State<AddNoticePage> {
         ],
         // here we display the title corresponding to the fragment
         // you can instead choose to have a static title
-        title: new Text('Add Notice'),
+        title: new Text('Add Message'),
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
@@ -57,12 +57,12 @@ class _AddNoticePageState extends State<AddNoticePage> {
                     TextFormField(
                       controller: _objectController,
                       decoration: const InputDecoration(
-                        labelText: 'Objet',
-                        hintText: 'Fermeture de l\'école',
+                        labelText: 'Titre',
+                        hintText: 'Titre',
                       ),
                       validator: (value) {
                         if (value.isEmpty) {
-                          return 'Please enter an object';
+                          return 'Please enter an title';
                         }
                         return null;
                       },
@@ -74,11 +74,11 @@ class _AddNoticePageState extends State<AddNoticePage> {
                       maxLines: null,
                       decoration: const InputDecoration(
                         labelText: 'Text',
-                        hintText: 'Suite à une décision gouvernementale, l\'école fermera dés ce..',
+                        hintText: 'Message',
                       ),
                       validator: (value) {
                         if (value.isEmpty) {
-                          return 'Please enter text';
+                          return 'Please enter a message';
                         }
                         return null;
                       },
@@ -97,12 +97,12 @@ class _AddNoticePageState extends State<AddNoticePage> {
                       orientation: GroupedButtonsOrientation.HORIZONTAL,
                       padding: const EdgeInsets.only(left: 14.0, top: 24.0,right:14),
                       labels: <String>[
-                        "1ère",
-                        "2ème",
-                        "3ème",
-                        "4ème",
-                        "5ème",
-                        "6ème",
+                        "1A",
+                        "2A",
+                        "3A",
+                        "4A",
+                        "5A",
+                        "6A",
                       ],
                       onChange: (bool isChecked, String label, int index){
                         if(isChecked){
@@ -127,8 +127,8 @@ class _AddNoticePageState extends State<AddNoticePage> {
                   ),
                   RaisedButton(
                     onPressed: () {
-                      var notice = {
-                        'object':  _objectController.text,
+                      var message = {
+                        'title':  _objectController.text,
                         'text': _textController.text,
                         'date': _date,
                       };
@@ -137,7 +137,7 @@ class _AddNoticePageState extends State<AddNoticePage> {
                         DatabaseReference databaseReference = new FirebaseDatabase().reference();
                         for(var i in checkedClasses){
                           Firestore.instance
-                              .collection('classes').document(i.toString()).collection('notices').add(notice);
+                              .collection('classes').document(i.toString()).collection('messages').add(message);
                           databaseReference.child('notification/' + (i+1).toString()).set(DateTime.now().toString());
                         }
                         Navigator.pop(context);
