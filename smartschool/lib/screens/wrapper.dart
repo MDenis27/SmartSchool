@@ -5,17 +5,22 @@ import 'package:smartschool/models/user.dart';
 import 'package:smartschool/screens/authenticate/authenticate.dart';
 
 class Wrapper extends StatelessWidget {
+  bool adminMode = false;
+
   @override
   Widget build(BuildContext context) {
 
     final user = Provider.of<User>(context);
-    print(user);
 
     // return either Home or Authenticate widget
     if (user == null) {
       return Authenticate();
     } else {
-      return Home();
+      if(user.uid == "rroYbIadk2bXs9wr3K92os4GDkj1"){
+        adminMode = true;
+        //return HomePage();
+      }else{adminMode = false;}
+      return HomePage(adminMode:adminMode , uid : user.uid);
     }
   }
 }

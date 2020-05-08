@@ -1,86 +1,202 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:smartschool/home/setting-form.dart';
-import 'package:smartschool/models/message.dart';
-import 'package:smartschool/models/user.dart';
+import 'package:smartschool/shared/class_notices.dart';
+import 'package:smartschool/screens/addMesssage/addMessage.dart';
 import 'package:smartschool/services/auth.dart';
-import 'package:smartschool/services/database.dart';
-import 'package:provider/provider.dart';
-import 'message_list.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'dart:io';
 
-class Home extends StatelessWidget {
+
+class DrawerItem {
+  String title;
+  IconData icon;
+  DrawerItem(this.title, this.icon);
+}
+
+class HomePage extends StatefulWidget {
+  final bool adminMode;
+  final String uid;
+  HomePage({this.adminMode,this.uid});
+  final drawerItems = [
+    new DrawerItem("1A", Icons.accessibility_new),
+    new DrawerItem("2A", Icons.accessibility_new),
+    new DrawerItem("3A", Icons.accessibility_new),
+    new DrawerItem("4A", Icons.accessibility_new),
+    new DrawerItem("5A", Icons.accessibility_new),
+    new DrawerItem("6A", Icons.accessibility_new),
+  ];
+  @override
+  State<StatefulWidget> createState() {
+    return new HomePageState();
+  }
+}
+
+class HomePageState extends State<HomePage> {
+  int _selectedDrawerIndex = 0;
+  String titleMenu = "NotiSchool 1ère";
   final AuthService _auth = AuthService();
+
+
+  _getDrawerItemWidget(int classIndex) {
+
+    return new ClassNotices(classIndex : classIndex ,uid:widget.uid);
+  }
+
+  _onSelectItem(int index) {
+    setState((){
+      _selectedDrawerIndex = index;
+      titleMenu = "NotiSchool"+' '+widget.drawerItems[_selectedDrawerIndex].title;
+      notifications[index] = 0;
+    });
+    Navigator.of(context).pop(); // close the drawer
+    Firestore.instance
+        .collection('users')
+        .document(widget.uid)
+        .updateData({
+      "NumNotifClass": notifications
+    });
+  }
+  //To avoid onMessage call to be triggered twice
+  static int i = 0;
+  List notifications = [0, 0, 0, 0, 0, 0];
+
+
+  FirebaseMessaging _firebaseMessaging = new FirebaseMessaging();
+  @override
+  void initState() {
+    Firestore.instance
+        .collection('users')
+        .document(widget.uid)
+        .get()
+        .then((DocumentSnapshot ds) {
+      setState(() {
+        notifications = ds.data["NumNotifClass"];
+      });
+    });
+
+    _firebaseMessaging.configure(
+      onMessage: (Map<String, dynamic> message) async {
+        if(i%2==0) {
+
+          String classnumber = message["notification"]["body"];
+          int number = int.parse(classnumber[classnumber.length-1]);
+          print('onMessage called: $message');
+          Firestore.instance
+              .collection('users')
+              .document(widget.uid)
+              .get()
+              .then((DocumentSnapshot ds) {
+            setState(() {
+              notifications[number-1] += 1;
+            });
+            Firestore.instance
+                .collection('users')
+                .document(widget.uid)
+                .updateData({
+              "NumNotifClass": notifications
+            });
+          });
+        }
+        i++;
+      },
+      onResume: (Map<String, dynamic> message) async {
+        print('onResume called: $message');
+      },
+      onLaunch: (Map<String, dynamic> message) async {
+        print('onLaunch called: $message');
+      },
+    );
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    final user = Provider.of<User>(context);
-
-    void _showSettingsPanel() {
-      showModalBottomSheet(
-        isScrollControlled: true,
-          context: context,
-          builder: (context) {
-            return Container(
-              padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 60.0),
-              child: SettingsForm(),
-            );
-          });
+    FloatingActionButton adminAddOption = new FloatingActionButton(
+      heroTag: "addNoticeBtn",
+      onPressed: () {
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => AddNoticePage()));
+      },
+      child: Icon(Icons.add),
+    );
+    var drawerOptions = <Widget>[];
+    for (var i = 0; i < widget.drawerItems.length; i++) {
+      var d = widget.drawerItems[i];
+      drawerOptions.add(
+          new ListTile(
+            leading: notifications[i] == 0 ? new Icon(d.icon):
+            new Stack(
+              children: <Widget>[
+                new Icon(d.icon),
+                new Positioned(
+                  right: 0,
+                  child: new Container(
+                    padding: EdgeInsets.all(1),
+                    decoration: new BoxDecoration(
+                      color: Colors.red,
+                      borderRadius: BorderRadius.circular(6),
+                    ),
+                    constraints: BoxConstraints(
+                      minWidth: 12,
+                      minHeight: 12,
+                    ),
+                    child: new Text(
+                      notifications[i].toString(),
+                      style: new TextStyle(
+                        color: Colors.white,
+                        fontSize: 8,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                )
+              ],
+            ),
+            title: new Text(d.title),
+            selected: i == _selectedDrawerIndex,
+            onTap: () => _onSelectItem(i),
+          )
+      );
     }
 
-    bool _isAdmin() {
-      if (user.uid == "XFAHOg4HzLSKqXHunsB4S3AyF1n1") {
-        return true;
-      } else {
-        return false;
-      }
-    }
-
-
-    return StreamProvider<List<Message>>.value(
-      value: DatabasesService().messages,
-      child: Scaffold(
-        backgroundColor: Colors.brown[50],
-        appBar: AppBar(
-          title: Text('Home Page'),
-          backgroundColor: Colors.brown[400],
-          elevation: 0.0,
-          actions: <Widget>[
-            IconButton(
+    return new Scaffold(
+      appBar: new AppBar(
+        backgroundColor: Colors.blue[400],
+        elevation: 0.0,
+        actions: <Widget>[
+          FlatButton.icon(
               icon: Icon(Icons.exit_to_app),
-              color: Colors.black,
-              onPressed: () async {
+              label: Text('Logout'),
+              onPressed:() async {
                 await _auth.signOut();
-              },
+              }
+          )
+        ],
+        // here we display the title corresponding to the fragment
+        // you can instead choose to have a static title
+        title: new Text(titleMenu),
+      ),
+      drawer: new Drawer(
+        child: new ListView(
+          padding: EdgeInsets.zero,
+          children: <Widget>[
+            DrawerHeader(
+              child: Text(
+                'Select class',
+                style: TextStyle(color: Colors.white, fontSize: 25),
+              ),
+              decoration: BoxDecoration(
+                  color: Colors.green,
+                  image: DecorationImage(
+                      fit: BoxFit.fill,
+                      image: AssetImage('assets/images/cover.jpg'))),
             ),
-            IconButton(
-              icon: Icon(Icons.add),
-              color: Colors.green,
-              onPressed: () {
-                if (_isAdmin()){
-                  // TODO implement add note
-                  print('Do Something');
-                } else {
-                  print('Not Admin');
-                }
-              },
-            ),
-            IconButton(
-              icon: Icon(Icons.settings),
-              color: Colors.grey,
-              onPressed: () => _showSettingsPanel(),
-            ),
+            new Column(children: drawerOptions)
           ],
         ),
-        body: Container(
-          decoration: BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage('assets/crayon.png'),
-              fit: BoxFit.cover,
-            )
-          ),
-            child: MessageList()
-        ),
       ),
+      body: _getDrawerItemWidget(_selectedDrawerIndex),
+      floatingActionButton: widget.adminMode == true ? adminAddOption : null,
     );
   }
 }

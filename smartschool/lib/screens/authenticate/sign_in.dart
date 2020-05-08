@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:smartschool/services/auth.dart';
-import 'package:smartschool/shared/constants.dart';
 import 'package:smartschool/shared/loading.dart';
+import 'package:smartschool/services/auth.dart';
 
 class SignIn extends StatefulWidget {
   final Function toggleView;
@@ -12,70 +11,75 @@ class SignIn extends StatefulWidget {
 }
 
 class _SignInState extends State<SignIn> {
-  final AuthService _auth = AuthService();
-  final _formkey = GlobalKey<FormState>();
-  bool loading = false;
 
-  // text field state
+  final AuthService _auth = AuthService();
+  final _formKey = GlobalKey<FormState>();
+  bool loading = false;
+  //text field state
   String email = '';
   String password = '';
   String error = '';
 
   @override
   Widget build(BuildContext context) {
-    return loading ? Loading() : Scaffold(
-      backgroundColor: Colors.brown[100],
+    return loading? Loading(): Scaffold(
+      backgroundColor: Colors.blue[50],
       appBar: AppBar(
-        backgroundColor: Colors.brown[400],
+        backgroundColor: Colors.blue[400],
         elevation: 0.0,
-        title: Text("Sign in to SmartSchool"),
+        title: Text('Sign in to Notischool'),
         actions: <Widget>[
           FlatButton.icon(
+              icon: Icon(Icons.person),
+              label: Text('Register'),
               onPressed: () {
                 widget.toggleView();
-              },
-              icon: Icon(Icons.person),
-              label: Text("Register"))
+              }
+          )
         ],
       ),
       body: Container(
-        padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 50.0),
+        padding: EdgeInsets.symmetric(vertical:20.0, horizontal: 50.0) ,
         child: Form(
-          key: _formkey,
+          key: _formKey,
           child: Column(
             children: <Widget>[
-              SizedBox(height: 20.0),
+              SizedBox(height: 10.0),
               TextFormField(
-                decoration: textInputDecoration.copyWith(hintText: 'Email'),
-                validator: (val) => val.isEmpty ? 'Enter an email' : null,
-                onChanged: (val) {
-                  setState(() => email = val);
-                },
+                  decoration: const InputDecoration(
+                    labelText: 'Email',
+                    hintText: 'notischool@example.com',
+                  ),
+                  validator: (val) => val.isEmpty ? 'Enter an email' : null,
+                  onChanged: (val){
+                    setState(() => email = val);
+                  }
               ),
               SizedBox(height: 20.0),
               TextFormField(
-                decoration: textInputDecoration.copyWith(hintText: 'Password'),
-                validator: (val) =>
-                    val.length < 6 ? 'Enter an password 6+ char long' : null,
-                obscureText: true,
-                onChanged: (val) {
-                  setState(() => password = val);
-                },
+                  decoration: const InputDecoration(
+                    labelText: 'Password',
+                  ),
+                  obscureText: true,
+                  validator: (val) => val.length < 6 ? 'Enter a password 6+ chars long' : null,
+                  onChanged: (val){
+                    setState(() => password = val);
+                  }
               ),
               SizedBox(height: 20.0),
               RaisedButton(
-                color: Colors.pink[400],
+                color: Colors.blueGrey[400],
                 child: Text(
-                  'Sign In',
+                  'Sign in',
                   style: TextStyle(color: Colors.white),
                 ),
                 onPressed: () async {
-                  if (_formkey.currentState.validate()) {
+                  if(_formKey.currentState.validate()){
                     setState(() => loading = true);
-                    dynamic result =
-                        await _auth.signInWithEmailAndPassword(email, password);
-                    if (result == null) {
-                      setState(() {
+                    //dynamic because we are going to have something back
+                    dynamic result = await _auth.signInWithEmailAndPassword(email, password);
+                    if(result == null){
+                      setState((){
                         error = 'Could not sign in with those credentials';
                         loading = false;
                       });
@@ -85,8 +89,8 @@ class _SignInState extends State<SignIn> {
               ),
               SizedBox(height: 12.0),
               Text(
-                error,
-                style: TextStyle(color: Colors.red, fontSize: 14.0),
+                  error,
+                  style: TextStyle(color: Colors.red, fontSize: 14.0)
               ),
             ],
           ),
