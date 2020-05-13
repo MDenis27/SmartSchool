@@ -33,7 +33,7 @@ class HomePage extends StatefulWidget {
 
 class HomePageState extends State<HomePage> {
   int _selectedDrawerIndex = 0;
-  String titleMenu = "NotiSchool 1ère";
+  String titleMenu = "NotiSchool 1A";
   final AuthService _auth = AuthService();
 
 

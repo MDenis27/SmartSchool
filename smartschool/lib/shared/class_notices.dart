@@ -72,7 +72,7 @@ class _ClassNoticesState extends State<ClassNotices> {
 
   Widget _buildBody(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
-      stream: Firestore.instance.collection('classes').document(widget.classIndex.toString()).collection('notices').orderBy('date',descending: true).snapshots(),
+      stream: Firestore.instance.collection('classes').document(widget.classIndex.toString()).collection('messages').orderBy('date',descending: true).snapshots(),
       builder: (context, snapshot) {
         if (!snapshot.hasData) return LinearProgressIndicator();
         return _buildListNotices(context, snapshot.data.documents);
