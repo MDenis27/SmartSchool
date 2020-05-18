@@ -189,7 +189,7 @@ class HomePageState extends State<HomePage> {
                   color: Colors.green,
                   image: DecorationImage(
                       fit: BoxFit.fill,
-                      image: AssetImage('assets/images/cover.jpg'))),
+                      image: AssetImage('assets/images/crayon.png'))),
             ),
             new Column(children: drawerOptions)
           ],
