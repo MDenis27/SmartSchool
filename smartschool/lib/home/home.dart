@@ -112,7 +112,7 @@ class HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     FloatingActionButton adminAddOption = new FloatingActionButton(
-      heroTag: "addNoticeBtn",
+      heroTag: "addMessageBtn",
       onPressed: () {
         Navigator.push(context,
             MaterialPageRoute(builder: (context) => AddMessagePage()));
