@@ -61,8 +61,8 @@ class _ClassNoticesState extends State<ClassNotices> {
           });
         });
       },
-      child: listsubscribes[widget.classIndex]? Icon(Icons.check, color:Colors.white):Icon(Icons.add_alert, color:Colors.black),
-      backgroundColor: listsubscribes[widget.classIndex]? Colors.lightGreen : Colors.lightBlue,
+      child: listsubscribes[widget.classIndex]? Icon(Icons.check, color:Colors.white):Icon(Icons.notifications, color:Colors.black),
+      backgroundColor: listsubscribes[widget.classIndex]? Colors.lightGreen : Colors.orangeAccent,
     );
     return Scaffold( //return loading widget instead if loading state change
       body: _buildBody(context),

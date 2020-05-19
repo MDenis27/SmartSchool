@@ -33,7 +33,7 @@ class HomePage extends StatefulWidget {
 
 class HomePageState extends State<HomePage> {
   int _selectedDrawerIndex = 0;
-  String titleMenu = "NotiSchool 1A";
+  String titleMenu = "SmartSchool 1A";
   final AuthService _auth = AuthService();
 
 
@@ -181,11 +181,11 @@ class HomePageState extends State<HomePage> {
           children: <Widget>[
             DrawerHeader(
               child: Text(
-                'Choose class',
+                'Choisir classe',
                 style: TextStyle(color: Colors.white, fontSize: 25),
               ),
               decoration: BoxDecoration(
-                  color: Colors.lightGreenAccent,
+                  color: Colors.green,
                   image: DecorationImage(
                       fit: BoxFit.fill,
                       image: AssetImage('assets/images/crayon.png'))),
