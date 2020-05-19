@@ -26,7 +26,7 @@ class _RegisterState extends State<Register> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: Colors.lightGreenAccent[400],
+        backgroundColor: Colors.green[400],
         elevation: 0.0,
         title: Text('Sign up to SmartSchool'),
         actions: <Widget>[
@@ -85,7 +85,7 @@ class _RegisterState extends State<Register> {
               ),
               SizedBox(height: 20.0),
               RaisedButton(
-                  color: Colors.lightGreenAccent[400],
+                  color: Colors.green[400],
                   child: Text(
                     'Register',
                     style: TextStyle(color: Colors.white),

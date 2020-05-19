@@ -30,7 +30,7 @@ class _AddMessagePageState extends State<AddMessagePage> {
       appBar: new AppBar(
         automaticallyImplyLeading: false,
         centerTitle: true,
-        backgroundColor: Colors.lightGreenAccent[400],
+        backgroundColor: Colors.green[400],
         elevation: 0.0,
         actions: <Widget>[
           FlatButton.icon(
