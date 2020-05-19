@@ -45,7 +45,7 @@ class HomePageState extends State<HomePage> {
   _onSelectItem(int index) {
     setState((){
       _selectedDrawerIndex = index;
-      titleMenu = "NotiSchool"+' '+widget.drawerItems[_selectedDrawerIndex].title;
+      titleMenu = "SmartSchool "+widget.drawerItems[_selectedDrawerIndex].title;
       notifications[index] = 0;
     });
     Navigator.of(context).pop(); // close the drawer
@@ -77,7 +77,6 @@ class HomePageState extends State<HomePage> {
     _firebaseMessaging.configure(
       onMessage: (Map<String, dynamic> message) async {
         if(i%2==0) {
-
           String classnumber = message["notification"]["body"];
           int number = int.parse(classnumber[classnumber.length-1]);
           print('onMessage called: $message');
