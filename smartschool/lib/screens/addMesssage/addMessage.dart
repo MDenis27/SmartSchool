@@ -30,7 +30,7 @@ class _AddMessagePageState extends State<AddMessagePage> {
       appBar: new AppBar(
         automaticallyImplyLeading: false,
         centerTitle: true,
-        backgroundColor: Colors.blue[400],
+        backgroundColor: Colors.lightGreenAccent[400],
         elevation: 0.0,
         actions: <Widget>[
           FlatButton.icon(
@@ -43,7 +43,7 @@ class _AddMessagePageState extends State<AddMessagePage> {
         ],
         // here we display the title corresponding to the fragment
         // you can instead choose to have a static title
-        title: new Text('Add Message'),
+        title: new Text('Ajouter un message'),
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
@@ -62,7 +62,7 @@ class _AddMessagePageState extends State<AddMessagePage> {
                       ),
                       validator: (value) {
                         if (value.isEmpty) {
-                          return 'Please enter an title';
+                          return 'Veuillez entrer un titre';
                         }
                         return null;
                       },
@@ -78,14 +78,14 @@ class _AddMessagePageState extends State<AddMessagePage> {
                       ),
                       validator: (value) {
                         if (value.isEmpty) {
-                          return 'Please enter a message';
+                          return 'Veuillez entrer un message';
                         }
                         return null;
                       },
                     ),
                     Container(
                       padding: const EdgeInsets.only(top: 20.0),
-                      child: Text("Select classes",
+                      child: Text("Choisir une classe",
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 20.0
@@ -123,7 +123,7 @@ class _AddMessagePageState extends State<AddMessagePage> {
                     onPressed: () {
                       Navigator.pop(context);
                     },
-                    child: Text("Cancel"),
+                    child: Text("Annuler"),
                   ),
                   RaisedButton(
                     onPressed: () {
@@ -143,7 +143,7 @@ class _AddMessagePageState extends State<AddMessagePage> {
                         Navigator.pop(context);
                       }
                     },
-                    child: Text("Add"),
+                    child: Text("Ajouter"),
                   ),
                 ],
               ),

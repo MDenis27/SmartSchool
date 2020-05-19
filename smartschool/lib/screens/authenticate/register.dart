@@ -24,11 +24,11 @@ class _RegisterState extends State<Register> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.blue[50],
+      backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: Colors.blue[400],
+        backgroundColor: Colors.lightGreenAccent[400],
         elevation: 0.0,
-        title: Text('Sign up to Notischool'),
+        title: Text('Sign up to SmartSchool'),
         actions: <Widget>[
           FlatButton.icon(
               icon: Icon(Icons.person),
@@ -50,7 +50,7 @@ class _RegisterState extends State<Register> {
                   validator: (val) => val.isEmpty ? 'Enter an email' : null,
                   decoration: const InputDecoration(
                     labelText: 'Email',
-                    hintText: 'notischool@example.com',
+                    hintText: 'your@email.com',
                   ),
                   onChanged: (val){
                     setState(() => email = val);
@@ -70,7 +70,7 @@ class _RegisterState extends State<Register> {
               SizedBox(height: 10.0),
               TextFormField(
                   decoration: const InputDecoration(
-                    labelText: 'Confirm password',
+                    labelText: 'Confirmer password',
                   ),
                   obscureText: true,
                   validator: (val) {
@@ -85,7 +85,7 @@ class _RegisterState extends State<Register> {
               ),
               SizedBox(height: 20.0),
               RaisedButton(
-                  color: Colors.blueGrey[400],
+                  color: Colors.lightGreenAccent[400],
                   child: Text(
                     'Register',
                     style: TextStyle(color: Colors.white),

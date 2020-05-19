@@ -48,9 +48,9 @@ class _SignInState extends State<SignIn> {
               TextFormField(
                   decoration: const InputDecoration(
                     labelText: 'Email',
-                    hintText: 'notischool@example.com',
+                    hintText: 'your@mail.com',
                   ),
-                  validator: (val) => val.isEmpty ? 'Enter an email' : null,
+                  validator: (val) => val.isEmpty ? 'Entrer un email' : null,
                   onChanged: (val){
                     setState(() => email = val);
                   }
@@ -61,7 +61,7 @@ class _SignInState extends State<SignIn> {
                     labelText: 'Password',
                   ),
                   obscureText: true,
-                  validator: (val) => val.length < 6 ? 'Enter a password 6+ chars long' : null,
+                  validator: (val) => val.length < 6 ? 'Enter un mots de passe de 6+ characters' : null,
                   onChanged: (val){
                     setState(() => password = val);
                   }

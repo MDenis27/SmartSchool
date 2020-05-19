@@ -160,7 +160,7 @@ class HomePageState extends State<HomePage> {
 
     return new Scaffold(
       appBar: new AppBar(
-        backgroundColor: Colors.blue[400],
+        backgroundColor: Colors.green[400],
         elevation: 0.0,
         actions: <Widget>[
           FlatButton.icon(
@@ -181,11 +181,11 @@ class HomePageState extends State<HomePage> {
           children: <Widget>[
             DrawerHeader(
               child: Text(
-                'Select class',
+                'Choose class',
                 style: TextStyle(color: Colors.white, fontSize: 25),
               ),
               decoration: BoxDecoration(
-                  color: Colors.green,
+                  color: Colors.lightGreenAccent,
                   image: DecorationImage(
                       fit: BoxFit.fill,
                       image: AssetImage('assets/images/crayon.png'))),
