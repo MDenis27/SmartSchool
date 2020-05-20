@@ -26,7 +26,7 @@ class AuthService {
       return null;
     }
   }
-  // sign in with email and pswrd
+  // sign in with email and pwd
   Future signInWithEmailAndPassword(String email, String password) async {
     try{
       AuthResult result = await _auth.signInWithEmailAndPassword(email: email, password: password);
@@ -38,7 +38,7 @@ class AuthService {
       return null;
     }
   }
-  //register with email and pswd
+  //register with email and pwd
   Future registerWithEmailAndPassword(String email, String password) async {
     try{
       AuthResult result = await _auth.createUserWithEmailAndPassword(email: email, password: password);

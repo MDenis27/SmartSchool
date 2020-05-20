@@ -3,6 +3,7 @@ import 'package:smartschool/models/message.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:smartschool/shared/loading.dart';
 
 
 class ClassNotices extends StatefulWidget {
@@ -74,7 +75,7 @@ class _ClassNoticesState extends State<ClassNotices> {
     return StreamBuilder<QuerySnapshot>(
       stream: Firestore.instance.collection('classes').document(widget.classIndex.toString()).collection('messages').orderBy('date',descending: true).snapshots(),
       builder: (context, snapshot) {
-        if (!snapshot.hasData) return LinearProgressIndicator();
+        if (!snapshot.hasData) return Loading();
         return _buildListNotices(context, snapshot.data.documents);
       },
     );
