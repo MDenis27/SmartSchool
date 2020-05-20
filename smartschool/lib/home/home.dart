@@ -56,6 +56,7 @@ class HomePageState extends State<HomePage> {
       "NumNotifClass": notifications
     });
   }
+
   //To avoid onMessage call to be triggered twice
   static int i = 0;
   List notifications = [0, 0, 0, 0, 0, 0];
@@ -112,6 +113,7 @@ class HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     FloatingActionButton adminAddOption = new FloatingActionButton(
       heroTag: "addMessageBtn",
+      backgroundColor: Colors.green[400],
       onPressed: () {
         Navigator.push(context,
             MaterialPageRoute(builder: (context) => AddMessagePage()));
